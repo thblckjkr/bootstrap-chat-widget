@@ -21,6 +21,5 @@
    "hidden": false,
    "chatDisabled": false,
    "privateChatDisabled": false,
-   "silentUserEnterLeave": true,
-   "chatPageURL": "http://localhost:3000/"
+   "silentUserEnterLeave": true
 }
