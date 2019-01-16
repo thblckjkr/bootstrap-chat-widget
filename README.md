@@ -20,6 +20,8 @@ On **frontend**
 
 - JQuery (!3.3.1)
 
+- Bootstrap 4
+
 # Installation
 
 ## Backend
