@@ -49,18 +49,18 @@
 <div id="chat"></div>
 
 <script type="text/javascript">
-   var chat = new chattering({
-      url : "http://localhost:3000/", // Your chat, as is accesible to the navigator
-      id : "chat",
-      room : "default",
-      user : "myname",
-      sess : {
-         // To create a persistent connection using as id
-         // the value of the specified cookie
-         method : "cookie",    // Current methods supported: [cookie]
-         name :   "ci-session" // This uses the codeigniter hash
-      }
-   });
+var chat = new chattering({
+   url : "http://localhost:3000/", // Your chat, as is accesible to the navigator
+   id : "chat",
+   room : "default",
+   user : "myname",
+   sess : {
+      // To create a persistent connection using as id
+      // the value of the specified cookie
+      method : "cookie",    // Current methods supported: [cookie]
+      name :   "ci-session" // This uses the codeigniter hash
+   }
+});
 </script>
 </body>
 </html>

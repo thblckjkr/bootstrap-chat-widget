@@ -1,36 +1,72 @@
-var chattering = function(options){
+var chattering = function(options){ // Controller
    this.socket;
-   this.url;
-   this.divid;
 
    this.init  = function(){
       // Check if necessary options were provided
-      if(typeof options.url === "undefined")
-         throw new Error("The URL was not defined");
+      if(
+         typeof options.url === "undefined"  || typeof options.id === "undefined" ||
+         typeof options.room === "undefined" || typeof options.sess  === "undefined"
+      )
+         throw new Error("Missing necessary information on options");
 
       this.url = options.url;
-
-      this.helpers.addMesssage();
+      this.room = options.room; this.user = options.user;
+      this.sess = options.sess;
 
       // Disabled for test pourposes
       // this.socket = io(this.url, { transports: ['websocket'] });
 
-      id = "chat",
-      room = "default",
-      user = "myname",
-      sess = {
-         // To create a persistent connection using as id
-         // the value of the specified cookie
-         method : "cookie",
-         name : "ci-session" // This uses the codeigniter hash
-      }
+      this.UI = new chatteringUI({
+         divid: options.id,
+         room: options.room,
+         user: options.user
+      });
+      this.UI.generate();
    }
 
-   this.helpers = {
-      addMesssage : function(){
-         alert("working")
-      }
+   this.sockets = function(){
+      this.socket.on('connect', function () {
+
+      });
    }
 
-   this.init();
+   this.chat = function(){
+      var that = this;
+      // Server sends a new message
+      socket.on('chat', function (msg) {
+         var $message = $("<div></div>").html(msg.msg);
+         this.UI.addMessage($message, msg.room, msg.user)
+      });
+
+      // Server sends a new photo
+      socket.on('chat image', function (msg) {
+         var $message = $("<div></div>").append($('<img>',{
+            src: msg.img,
+            class:'message-image' // TODO
+         }));
+         that.UI.addMessage($message, msg.room, msg.user)
+      });
+   }
+
+   this.init(); // Automatically init from inside scope
+}
+
+var chatteringUI = function(opt){ // Views
+   this.divid = opt.divid;
+
+   this.generate = function(){
+      let temp = $( '<div></div>' )
+         .attr("id", '#' + this.divid + 'UI')
+         .addClass("chatteringMain")
+
+      $('#' + this.divid)
+         .addClass("chatteringOpen btn btn-secondary btn-lg rounded-circle position-fixed")
+         .append('<i class="fa fa-fw fa-comments" style="line-height:2"></i>')
+         .css({ right : "20px", bottom: "20px" })
+         .parent().append( temp );
+   },
+
+   this.addMesssage = function(){
+      
+   }
 }
