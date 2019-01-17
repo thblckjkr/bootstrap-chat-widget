@@ -28,12 +28,14 @@ On **frontend**
 
 > Remember to do any modification to the `config.json` that you need, before running it.
 
-This proyect, for simplicity and thing, don't use a database, so, the messages aren't persitent, just they are on the fly. You can modify the code and get a database implementation with no much effort.
+Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
+
+This proyect, for simplicity and things, don't use a database, so, the messages aren't persitent, they are just on the fly. You can modify the code and get a database implementation with no much effort.
 
 ```
 git clone https://github.com/thblckjkr/chattering.io.git
 
-npm update
+npm install
 
 node server.js OR npm start
 ```
@@ -52,14 +54,14 @@ Add a reference to the proyect
 
 <script type="text/javascript">
    var chat = new chattering({
-      url : "http://localhost:3000/" // Your chat, as is accesible to the navigator
+      url : "http://localhost:3000/", // Your chat, as is accesible to the navigator
       id : "chat",
       room : "default",
       user : "myname",
       sess : {
          // To create a persistent connection using as id
          // the value of the specified cookie
-         method : "cookie",
+         method : "cookie",    // Current methods supported: [cookie]
          name :   "ci-session" // This uses the codeigniter hash
       }
    });

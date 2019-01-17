@@ -2,13 +2,17 @@
   "name": "chattering.io",
   "version": "0.1.3",
   "description": "A chat widget made with Socket.IO and Bootstrap 4",
-  "repository": "https://github.com/thblckjkr/chattering.io",
+  "repository": {
+    "url": "git+https://github.com/thblckjkr/chattering.io.git",
+    "type": "git"
+  },
   "author": {
     "name": "Teo Gonzalez Calzada @thblckjkr",
     "email": "teo.gonzalez.c@hotmail.com"
   },
   "scripts": {
-    "start": "server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
