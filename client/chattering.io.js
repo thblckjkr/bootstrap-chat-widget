@@ -15,7 +15,7 @@ var chattering = function(options){ // Controller
       this.sess = options.sess;
 
       // Disabled for test pourposes
-      this.socket = io(this.url + "chat");
+      // this.socket = io(this.url + "chat");
       
       this.UI = new chatteringUI({
          divid: options.id,
@@ -58,7 +58,7 @@ var chattering = function(options){ // Controller
    }
 
    this.init(); // Automatically init from inside scope
-   this.chat(); //Enable chat functionality
+   // this.chat(); //Enable chat functionality
 }
 
 var chatteringUI = function(opt){ // Views
