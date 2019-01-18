@@ -87,10 +87,12 @@ var chatteringUI = function(opt){ // Views
    this.gChat = function(){
       var that = this;
       // Here, we've create all the inner content for the chat
+
+      //Closer button
       let closer = $('<div></div>')
          .attr({id: that.divid + "Closer"})
-         .addClass("fa fa-times")
-         .text("close")
+         .addClass("btn btn-dark pull-right")
+         .text("Cerrar")
          .on("click", function(){
             $('#' + that.divid + 'UI').css({ display : "none" });
          });
