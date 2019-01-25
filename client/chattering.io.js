@@ -15,12 +15,13 @@ var chattering = function(options){ // Controller
       this.sess = options.sess;
 
       // Disabled for test pourposes
-      // this.socket = io(this.url + "chat");
+      this.socket = io(this.url + "chat");
       
       this.UI = new chatteringUI({
          divid: options.id,
          room: options.room,
-         user: options.user
+         user: options.user,
+         toSend: that.send()  // Function that will be used to call the send messages
       });
 
       this.UI.generate();
@@ -32,6 +33,17 @@ var chattering = function(options){ // Controller
       });
    }
 
+   // Sender
+   this.send = function(message){
+      var that = this;
+
+      this.socket.emit('message', {
+         msg : message,
+         user: that.user
+      });
+   }
+
+   // Receiver
    this.chat = function(){
       var that = this;
       this.socket.on('connect', function(){
@@ -58,11 +70,12 @@ var chattering = function(options){ // Controller
    }
 
    this.init(); // Automatically init from inside scope
-   // this.chat(); //Enable chat functionality
+   this.chat(); //Enable chat functionality
 }
 
 var chatteringUI = function(opt){ // Views
    this.divid = opt.divid;
+   this.senderFunction = opt.toSend;
 
    this.generate = function(){
       that = this;
@@ -124,12 +137,15 @@ var chatteringUI = function(opt){ // Views
 
       let $senderfield = $('<input></input>')
          .addClass("form-control")
-         .attr({ placeholder: "Type a message", type: "text", id: that.divid + "MsgBox" });
+         .attr({ placeholder: "Type a message", type: "text", id: that.divid + "MsgBox" })
+         .css({ width: "calc(100% - 2.2rem)"}) // IDK why but it works fine
+         .on("keypress", that.sender);
 
       let $senderbutton = $('<div></div>')
          .addClass("btn btn-secondary btn-sm rounded-circle")
          .append('<i class="fa fa-fw fa-paper-plane" style="line-height:2"></i>')
-         .css({ right : "20px", bottom: "20px" });
+         .css({ right : "20px", bottom: "20px" })
+         .on("click", that.sender);
          
 
       $footer
@@ -144,6 +160,22 @@ var chatteringUI = function(opt){ // Views
          .append($footer);
 
       return $div;
+   }
+
+   this.sender = function(event){
+      var that = this;
+
+      // Send only on enter
+      if( event.which != 13)
+         return;
+
+      let message = $("#" + that.divid + "MsgBox").val();
+
+      if(message == "")
+         return;
+
+      console.log("SENDING", message);
+      this.toSend( message )
    }
 
    this.addMesssage = function( msg, room, user ){
