@@ -69,3 +69,12 @@ Add a reference to the proyect
 ```
 
 That's everything you'll need. Now, go and modify anything you need.
+
+## Docs
+
+Elements dinamycally created
+
+- `id` "UI"
+- `id` "Closer"
+- `id` "Chat"
+- `id` "MsgBox"

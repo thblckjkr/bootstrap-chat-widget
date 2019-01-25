@@ -70,7 +70,7 @@ var chatteringUI = function(opt){ // Views
       // Generate a UI to chat
       let $temp = $( '<div></div>' )
          .attr("id", this.divid + 'UI')
-         .addClass("chatteringMain bg-primary col-md-3 fixed-bottom h-75")
+         .addClass("chatteringMain bg-white border col-md-3 p-0 fixed-bottom h-75")
          .css({ right: "1rem", left: "initial" });
 
       // Convert the given id, into a floating button, and append as a silbing the main chat form
@@ -81,27 +81,76 @@ var chatteringUI = function(opt){ // Views
          .parent().append( $temp );
 
       $('#' + that.divid + 'UI')
-         .append( that.gChat() );
+         .append( that.createUI() );
+      
+      $('#' +  that.divid)
+         .on("click", function(){
+            $('#' + that.divid + 'UI').css({ display : "block" });
+         });
    },
 
-   this.gChat = function(){
+   this.createUI = function(){
       var that = this;
       // Here, we've create all the inner content for the chat
+      let $head = $('<div></div>');
+      let $body = $('<div></div>');
+      let $footer = $('<div></div>');
 
-      //Closer button
-      let closer = $('<div></div>')
+      let $closer = $('<div></div>')
          .attr({id: that.divid + "Closer"})
-         .addClass("btn btn-dark pull-right")
-         .text("Cerrar")
+         .addClass("btn btn-outline-danger btn-sm rounded-0")
+         .append('<i class="fa fa-times"></i>')
          .on("click", function(){
             $('#' + that.divid + 'UI').css({ display : "none" });
          });
+
+      let $info = $('<div></div>')
+         .addClass("bg-secondary text-white flex-fill p-1")
+         .text("With who are we talking?");
+
+      $head
+         .addClass("d-flex flex-row justify-content-end clearfix")
+         .append($info)
+         .append($closer);
+
+      let $chatter = $('<div></div>')
+         .attr({id: that.divid + "Chat"})
+         .addClass("clearfix p-1")
+         .append("Messages");
+         
+      $body
+         .append($chatter);
       
-      var $div = $('<div></div>').append(closer) ;
+
+      let $senderfield = $('<input></input>')
+         .addClass("form-control")
+         .attr({ placeholder: "Type a message", type: "text", id: that.divid + "MsgBox" });
+
+      let $senderbutton = $('<div></div>')
+         .addClass("btn btn-secondary btn-sm rounded-circle")
+         .append('<i class="fa fa-fw fa-paper-plane" style="line-height:2"></i>')
+         .css({ right : "20px", bottom: "20px" });
+         
+
+      $footer
+         .addClass("d-inline-flex justify-content-end clearfix fixed-bottom position-absolute pb-1")
+         .append($senderfield)
+         .append($senderbutton);
+
+      var $div = $('<div></div>')
+         .addClass("h-100")
+         .append($head)
+         .append($body)
+         .append($footer);
+
       return $div;
    }
 
-   this.addMesssage = function(){
+   this.addMesssage = function( msg, room, user ){
+      var that = this;
+      $chat = $('#' + that.divid + "Chat")
+
+      $chat.append($msg);
       
    }
 }
